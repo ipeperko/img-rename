@@ -1,16 +1,16 @@
-#include <boost/filesystem.hpp>
 #include "ImageNaming.h"
 #include "Formatter.h"
 #include "Log.h"
-#include <iostream>
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+#include <iostream>
 
 namespace fs = boost::filesystem;
 
 void ImageNaming::convert()
 {
     if (!fs::is_directory(src_dir_)) {
-        throw::std::runtime_error(src_dir_ + " not directory");
+        throw ::std::runtime_error(src_dir_ + " not directory");
     }
 
     for (fs::directory_entry& x : fs::directory_iterator(src_dir_)) {
@@ -26,8 +26,7 @@ void ImageNaming::convert()
 
             boost::to_lower(ext);
 
-            Log(trace) << x.path() << " filename: " << x.path().filename() <<
-                " extension: " << x.path().extension();
+            Log(trace) << x.path() << " filename: " << x.path().filename() << " extension: " << x.path().extension();
 
             if (knownExtension(ext)) {
                 processImage(x.path().native());

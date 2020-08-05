@@ -1,8 +1,8 @@
-#include <boost/filesystem.hpp>
 #include "Formatter.h"
 #include "Log.h"
-#include <boost/algorithm/string.hpp>
 #include <ImageMagick-7/Magick++.h>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
 
@@ -38,7 +38,7 @@ Formatter::Appender cameraMake = [](FileItem& it) {
 Formatter::Appender delimiter = [](FileItem& it) {
     return "_";
 };
-} // namespace
+} // namespace Fn
 
 Formatter::Formatter()
 {
@@ -74,19 +74,15 @@ std::string Formatter::rename(FileItem& file)
         new_name += kOutputFormat;
     } while (fs::is_regular_file(new_name) && ++file.temp.count_fn);
 
-    Log(info) << "Rename file '" << file.fileName() << "' [" <<
-        (!file.captureDate().empty() ? file.captureDate() : std::string("unknown date")) << "_" <<
-        (!file.captureTime().empty() ? file.captureTime() : std::string("unknown time")) << " " <<
-        (!file.image().attribute("EXIF:Make").empty() ? file.image().attribute("EXIF:Make") : std::string("unknown manufacturer")) << ", " <<
-        (!file.image().attribute("EXIF:Model").empty() ? file.image().attribute("EXIF:Model") : std::string("unknown model")) << "]" <<
-        " --> " << new_name;
+    Log(info) << "Rename file '" << file.fileName() << "' [" << (!file.captureDate().empty() ? file.captureDate() : std::string("unknown date")) << "_" << (!file.captureTime().empty() ? file.captureTime() : std::string("unknown time")) << " " << (!file.image().attribute("EXIF:Make").empty() ? file.image().attribute("EXIF:Make") : std::string("unknown manufacturer")) << ", " << (!file.image().attribute("EXIF:Model").empty() ? file.image().attribute("EXIF:Model") : std::string("unknown model")) << "]"
+              << " --> " << new_name;
 
     return new_name;
 }
 
 void Formatter::setDestDirectory(std::string_view dir)
 {
-    std::string tmp {dir};
+    std::string tmp { dir };
     while (!tmp.empty() && tmp.back() == '/') {
         tmp.pop_back();
     }
@@ -99,13 +95,13 @@ void Formatter::setFormat(std::string_view format)
     auto p2 = p1;
 
     auto get_expr = [&]() {
-      size_t n = p2 - p1;
-      if (n) {
-          std::string s {p1, 0, n};
-          fs.push_back([s](FileItem&) {
-            return s;
-          });
-      }
+        size_t n = p2 - p1;
+        if (n) {
+            std::string s { p1, 0, n };
+            fs.push_back([s](FileItem&) {
+                return s;
+            });
+        }
     };
 
     fs.clear();

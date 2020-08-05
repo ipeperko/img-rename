@@ -1,16 +1,15 @@
 #include "FileItem.h"
 #include <ImageMagick-7/Magick++.h>
 #include <boost/algorithm/string.hpp>
-#include <ImageMagick-7/Magick++.h>
 
 FileItem::FileItem()
-    : img (std::make_shared<Magick::Image>())
+    : img(std::make_shared<Magick::Image>())
 {
 }
 
 FileItem::FileItem(std::string_view file_name)
     : filename(file_name)
-    , img (std::make_shared<Magick::Image>())
+    , img(std::make_shared<Magick::Image>())
 {
     img->read(filename);
     parseAttributes();
@@ -37,6 +36,7 @@ Magick::Image& FileItem::image()
 {
     return *img.get();
 }
+
 Magick::Image const& FileItem::image() const
 {
     return *img.get();
@@ -47,7 +47,7 @@ std::vector<std::string> FileItem::parseDateTime(Magick::Image& image)
     std::vector<std::string> v;
 
     auto split_ = [&](std::string_view s) {
-      boost::split(v, s, boost::is_any_of(" "), boost::token_compress_on);
+        boost::split(v, s, boost::is_any_of(" "), boost::token_compress_on);
     };
 
     split_(image.attribute("EXIF:DateTimeOriginal"));
