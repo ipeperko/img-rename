@@ -16,6 +16,7 @@ target_link_libraries(${PROJECT_NAME}
     ${Boost_FILESYSTEM_LIBRARY}
     libMagick++-7.Q16HDRI.so
     )
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 add_subdirectory(test)
 
