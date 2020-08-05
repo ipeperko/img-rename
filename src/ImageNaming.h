@@ -17,7 +17,7 @@ class ImageNaming
 public:
     ImageNaming() = default;
 
-    void convert();
+    void runDirectory();
 
     void setSrcDirectory(std::string_view dir)
     {

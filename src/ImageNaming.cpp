@@ -9,7 +9,7 @@
 
 namespace fs = boost::filesystem;
 
-void ImageNaming::convert()
+void ImageNaming::runDirectory()
 {
     if (!fs::is_directory(src_dir_)) {
         throw ::std::runtime_error(src_dir_ + " not directory");

@@ -120,7 +120,7 @@ int main(int argc, char** argv) try
     }
 
     // Convert files
-    nmg.convert();
+    nmg.runDirectory();
 
     exit(EXIT_SUCCESS);
 }
