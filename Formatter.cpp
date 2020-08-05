@@ -1,8 +1,8 @@
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
 #include "Formatter.h"
 #include "Log.h"
 #include <ImageMagick-7/Magick++.h>
-#include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
 

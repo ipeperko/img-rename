@@ -1,6 +1,6 @@
+#include <boost/algorithm/string.hpp>
 #include "FileItem.h"
 #include <ImageMagick-7/Magick++.h>
-#include <boost/algorithm/string.hpp>
 
 FileItem::FileItem()
     : img(std::make_shared<Magick::Image>())
