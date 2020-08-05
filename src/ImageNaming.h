@@ -1,5 +1,5 @@
-#ifndef IVO_IMG_NAME_IMAGENAMING_H
-#define IVO_IMG_NAME_IMAGENAMING_H
+#ifndef IMG_RENAME_IMAGENAMING_H
+#define IMG_RENAME_IMAGENAMING_H
 
 #include <stdexcept>
 #include <string>
@@ -68,4 +68,4 @@ private:
     Formatter formatter;
 };
 
-#endif //IVO_IMG_NAME_IMAGENAMING_H
+#endif //IMG_RENAME_IMAGENAMING_H
