@@ -7,7 +7,6 @@
 #include "Formatter.h"
 
 #define DEFAULT_DST_DIR "img_renamed"
-#define Throw throw std::runtime_error
 
 namespace Magick {
 class Image;
@@ -16,9 +15,6 @@ class Image;
 class ImageNaming
 {
 public:
-    // Init Imagemagick library (optional)
-    static void init_libImageMagick(const char* path);
-
     ImageNaming() = default;
 
     void convert();
@@ -53,6 +49,11 @@ public:
         return enable_write_;
     }
 
+    void setFormat(std::string_view format)
+    {
+        formatter.setFormat(format);
+    }
+
     // Case insensitive
     static constexpr const char* valid_extensions[] = { "jpg", "jpeg", "heic" };
 
@@ -63,7 +64,6 @@ private:
     std::string src_dir_ { "./" };
     bool enable_write_ { true };
     Formatter formatter;
-
 };
 
 #endif //IVO_IMG_NAME_IMAGENAMING_H

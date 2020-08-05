@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "ImageNaming.h"
 #include "Log.h"
+#include <ImageMagick-7/Magick++.h>
 
 // Command line tool:
 // $ identify -verbose IMG_0018.jpg
@@ -34,7 +35,7 @@ int main(int argc, char** argv) try
 {
     printHeader();
 
-    ImageNaming::init_libImageMagick(*argv);
+    Magick::InitializeMagick(*argv);
     ImageNaming nmg;
 
     po::options_description generic_options("Options");
@@ -44,6 +45,7 @@ int main(int argc, char** argv) try
         ("src-dir,s", po::value<std::string>(), "source directory")
         ("dest-dir,d", po::value<std::string>(), "destination directory directory\n"
                                                  "default: {src-dir}/" DEFAULT_DST_DIR)
+        ("format,f", po::value<std::string>(), "image name format (e.g. %D_%T_%M_%m)")
         ("disable-write", "disable write output files")
         ("log-level", po::value<std::string>(), "set logging level [error|warning|info|debug|trace]");
 
@@ -74,6 +76,11 @@ int main(int argc, char** argv) try
     // Disable witing option
     if (vm.count("disable-write")) {
         nmg.setWriteEnabled(false);
+    }
+
+    // Image name format
+    if (vm.count("format")) {
+        nmg.setFormat(vm["format"].as<std::string>());
     }
 
     // Source directory init
