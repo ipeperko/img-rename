@@ -11,13 +11,13 @@ Format options:
 - %M manufacturer (e.g. Apple)
 - %m model (e.g. iPhone_7)
 
-Default format is %D_%T_%m. Format can be also configured in configuration file */path_to_you_home_dir/.img_rename.conf*. Example:
+Default format is %D_%T_%m. Format can be also configured in configuration file */path_to_you_home_dir/.img_rename.conf*.
 
 ```shell script
 # Configuration file example
 format=%D-%T
 ```
-See help for more command line options
+See help for more command line options.
 
 ```shell script
 $ img_rename -h
