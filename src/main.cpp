@@ -6,7 +6,7 @@
 #include "Log.h"
 #include <ImageMagick-7/Magick++.h>
 
-#define VERSION "0.0.1"
+#define VERSION "0.0.2"
 
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
@@ -69,6 +69,9 @@ int main(int argc, char** argv) try
             throw;
         }
     }
+
+    // Read settings file
+    nmg.readSettingsFile();
 
     // Disable witing option
     if (vm.count("disable-write")) {

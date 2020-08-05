@@ -54,6 +54,8 @@ public:
         formatter.setFormat(format);
     }
 
+    void readSettingsFile();
+
     // Case insensitive
     static constexpr const char* valid_extensions[] = { "jpg", "jpeg", "heic" };
 

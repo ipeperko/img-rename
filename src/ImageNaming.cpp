@@ -3,6 +3,8 @@
 #include "Log.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
+#include <unistd.h>
+#include <pwd.h>
 #include <iostream>
 
 namespace fs = boost::filesystem;
@@ -58,5 +60,42 @@ void ImageNaming::processImage(std::string_view filename)
     }
     catch (std::exception& e) {
         Log(error) << "Error read filename " << filename << " : " << e.what();
+    }
+}
+
+void ImageNaming::readSettingsFile()
+{
+    struct passwd *pw = getpwuid(getuid());
+    const char *homedir = pw->pw_dir;
+    std::string fname;
+
+    if (homedir) {
+        fname += homedir;
+    }
+    if (!fname.empty()) {
+        fname += "/";
+    }
+    fname += ".img_rename.conf";
+
+    std::ifstream fi(fname);
+    if (!fi.is_open()) {
+        Log(trace) << "No config file found or cannot open " << fname;
+        return;
+    }
+
+    Log(trace) << "Reading config file " << fname;
+    std::string line;
+
+    while (std::getline(fi, line)) {
+        if (line.empty() || line[0] == '#') {
+            continue;
+        }
+
+        size_t p;
+        if ((p = line.find("format=")) != std::string::npos) {
+            std::string format = line.substr(p + strlen("format="));
+            Log(trace) << "Config file format : " << format;
+            setFormat(format);
+        }
     }
 }
