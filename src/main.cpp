@@ -1,3 +1,4 @@
+#include "ImgRename.h"
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
@@ -6,7 +7,7 @@
 #include "Log.h"
 #include <ImageMagick-7/Magick++.h>
 
-#define VERSION "0.0.2"
+//#define VERSION "0.0.2"
 
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
@@ -16,7 +17,9 @@ void printHeader()
     std::ostringstream s;
     s << "======================================\n";
     s << " Images rename tool\n";
-    s << " version " VERSION "\n";
+    s << " version " << IMG_RENAME_VERSION_MAJOR << "."
+      << IMG_RENAME_VERSION_MINOR << "."
+      << IMG_RENAME_VERSION_PATCH << "\n";
     s << " [ ";
     for (auto const& x : ImageNaming::valid_extensions) {
         s << x << " ";
@@ -55,7 +58,9 @@ int main(int argc, char** argv) try
         exit(EXIT_SUCCESS);
     }
     if (vm.count("version")) {
-        std::cout << "Version: " << VERSION << "\n";
+        std::cout << "Version: " << IMG_RENAME_VERSION_MAJOR << "."
+                                 << IMG_RENAME_VERSION_MINOR << "."
+                                 << IMG_RENAME_VERSION_PATCH << "\n";
         exit(EXIT_SUCCESS);
     }
 
