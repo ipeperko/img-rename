@@ -1,13 +1,13 @@
 set(BINARY ${CMAKE_PROJECT_NAME}_test)
 
 find_package (Boost REQUIRED COMPONENTS filesystem unit_test_framework program_options)
-include_directories (${Boost_INCLUDE_DIRS} ../)
+include_directories (${Boost_INCLUDE_DIRS} ../src/)
 
 set(TEST_SOURCES
-    ../FileItem.cpp
-    ../Formatter.cpp
-    ../ImageNaming.cpp
-    ../Log.cpp)
+    ../src/FileItem.cpp
+    ../src/Formatter.cpp
+    ../src/ImageNaming.cpp
+    ../src/Log.cpp)
 
 add_executable(${BINARY} test.cpp ${TEST_SOURCES})
 target_link_libraries(${BINARY}

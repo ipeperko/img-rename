@@ -7,7 +7,7 @@ find_package (Boost REQUIRED COMPONENTS filesystem program_options)
 include_directories(/usr/local/include/ImageMagick-7/)
 
 file(GLOB SOURCES
-    *.cpp
+    src/*.cpp
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
