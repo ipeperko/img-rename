@@ -18,23 +18,13 @@ FileItem::FileItem(std::string_view file_name)
 
 void FileItem::parseAttributes()
 {
-    //img.read(filename.data());
-
-//    attrs["make"] = img->attribute("EXIF:Make");
-//    attrs["model"] = img->attribute("EXIF:Model");
-//    boost::replace_all_copy(attrs["model"], " ", "_");
-
-    {
-        std::vector<std::string> v = parseDateTime(*img);
-        if (v.size() != 2) {
-            throw std::domain_error("Unhandled date formats '" + img->attribute("EXIF:DateTimeOriginal") + " " + img->attribute("EXIF:DateTime") + "'");
-        }
-
-        capture_date = v[0];
-        capture_time = v[1];
-//        attrs["capture_date"] = boost::replace_all_copy(v[0], ":", "");
-//        attrs["capture_time"] = boost::replace_all_copy(v[1], ":", "");
+    std::vector<std::string> v = parseDateTime(*img);
+    if (v.size() != 2) {
+        throw std::domain_error("Unhandled date formats '" + img->attribute("EXIF:DateTimeOriginal") + " " + img->attribute("EXIF:DateTime") + "'");
     }
+
+    capture_date = v[0];
+    capture_time = v[1];
 }
 
 void FileItem::write(std::string file_name)

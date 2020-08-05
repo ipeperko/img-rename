@@ -51,8 +51,8 @@ Formatter::Formatter()
 
 std::string Formatter::rename(FileItem& file)
 {
-    file.tmp_count_fn = 1;
-    std::string& new_name = file.tmp_new_filename;
+    file.temp.count_fn = 1;
+    std::string& new_name = file.temp.new_filename;
 
     do {
         if (!dest_dir.empty()) {
@@ -66,13 +66,13 @@ std::string Formatter::rename(FileItem& file)
             new_name += f(file);
         }
 
-        if (file.tmp_count_fn > 1) {
-            new_name += "_" + std::to_string(file.tmp_count_fn);
+        if (file.temp.count_fn > 1) {
+            new_name += "_" + std::to_string(file.temp.count_fn);
         }
 
         new_name += ".";
         new_name += kOutputFormat;
-    } while (fs::is_regular_file(new_name) && ++file.tmp_count_fn);
+    } while (fs::is_regular_file(new_name) && ++file.temp.count_fn);
 
     Log(info) << "Rename file '" << file.fileName() << "' [" <<
         (!file.captureDate().empty() ? file.captureDate() : std::string("unknown date")) << "_" <<

@@ -1,0 +1,2 @@
+Command line tool:
+$ identify -verbose IMG_0018.jpg

@@ -14,6 +14,12 @@ class Image;
 class FileItem
 {
 public:
+    struct Temp
+    {
+        std::string new_filename; // temporary file name (used by formatter)
+        int count_fn {0}; // count files with same file name (used by formatter)
+    } temp;
+
     FileItem();
     explicit FileItem(std::string_view file_name);
 
@@ -33,16 +39,9 @@ public:
 
     std::string const captureTime() const { return capture_time; }
 
-    std::string tmp_new_filename; // temporary file name (used by formatter)
-    int tmp_count_fn {0}; // count files with same file name (used by formatter)
-
 private:
     std::shared_ptr<Magick::Image> img;
     std::string filename;
-//    std::unordered_map<std::string, std::string> attrs;
-
-//    std::string attr_make;
-//    std::string attr_model;
     std::string capture_date;
     std::string capture_time;
 };

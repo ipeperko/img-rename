@@ -6,9 +6,6 @@
 #include "Log.h"
 #include <ImageMagick-7/Magick++.h>
 
-// Command line tool:
-// $ identify -verbose IMG_0018.jpg
-
 #define VERSION "1.0.2"
 
 namespace po = boost::program_options;
