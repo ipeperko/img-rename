@@ -2,6 +2,12 @@
 
 Command line tool for renaming images.
 
+### Motivation
+
+I wanted uniform image name format for my family photo collection so I build this small program to convert different kind of image types to JPG and rename files to specific name format.
+
+### Usage
+
 ```shell script
 $ img_rename --src-dir=/home/user/myimages --format="%D_%T_%m"
 ``` 
@@ -32,4 +38,4 @@ $ cmake ..
 $ make 
 $ make install
 ```
-Requires libraries boost, ImageMagick
+Requires libraries boost and ImageMagick.
