@@ -1,9 +1,11 @@
 #include "Log.h"
 #include <iomanip>
 #include <iostream>
+#include <mutex>
 
 namespace {
 LoggerLevel global_logging_level = info;
+std::mutex mtx;
 
 std::string timeStamp(std::chrono::system_clock::time_point tp)
 {
@@ -41,6 +43,8 @@ Log::~Log()
         if (s.empty() || s.back() != '\n') {
             el = "\n";
         }
+
+        std::lock_guard lock(mtx);
 
         if (level <= warning) {
             std::cout.flush();
