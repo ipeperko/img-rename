@@ -7,8 +7,6 @@
 #include "Log.h"
 #include <ImageMagick-7/Magick++.h>
 
-//#define VERSION "0.0.2"
-
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
 
