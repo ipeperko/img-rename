@@ -1,4 +1,4 @@
-#include "ImgRename.h"
+#include "img_rename.h"
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <iostream>
