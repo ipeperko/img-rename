@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(img_rename VERSION 0.1.1)
+project(img_rename VERSION 0.2.0)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -10,7 +10,15 @@ find_package (Boost REQUIRED COMPONENTS filesystem program_options)
 include_directories(/usr/local/include/ImageMagick-7/)
 
 file(GLOB SOURCES
-    src/*.cpp
+    src/main.cpp
+    src/FileItem.cpp
+    src/FileItem.h
+    src/Formatter.cpp
+    src/Formatter.h
+    src/ImageNaming.cpp
+    src/ImageNaming.h
+    src/Log.cpp
+    src/Log.h
     )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -11,6 +11,8 @@ namespace fs = boost::filesystem;
 
 void ImageNaming::runDirectory()
 {
+    unhandled_.clear();
+
     if (!fs::is_directory(src_dir_)) {
         throw ::std::runtime_error(src_dir_ + " not directory");
     }
@@ -22,43 +24,61 @@ void ImageNaming::runDirectory()
             std::string ext = x.path().extension().string();
             std::string filename = x.path().filename().string();
 
-            if (!ext.empty() && ext.front() == '.') {
+            if (!ext.empty() && ext.front() == '.')
                 ext.erase(0, 1);
-            }
 
             boost::to_lower(ext);
 
             Log(trace) << x.path() << " filename: " << x.path().filename() << " extension: " << x.path().extension();
 
-            if (knownExtension(ext)) {
+            if (knownExtension(ext))
                 processImage(x.path().native());
+        }
+    }
+
+    if (copy_unhandled_) {
+
+        for (auto const& file : unhandled_) {
+
+            try {
+                fs::path path(file);
+                std::string new_name = unhandledDirectory() + "/" + path.filename().string();
+
+                Log(info) << "Copy unhandled file " << file << " -> " << new_name;
+
+                if (enable_write_)
+                    fs::copy_file(file, new_name, fs::copy_option::overwrite_if_exists);
+            }
+            catch (std::exception& e) {
+                Log(error) << "Copy unhandled file failed - " << e.what();
             }
         }
     }
 }
 
+std::string ImageNaming::unhandledDirectory() const
+{
+    return (formatter.destDirectory().empty() ? std::string() : formatter.destDirectory() + "/") + DEFAULT_UNHANDLED_SUBDIR;
+}
+
 bool ImageNaming::knownExtension(std::string_view ext)
 {
-    for (auto const& x : valid_extensions) {
-        if (ext == x) {
-            return true;
-        }
-    }
-
-    return false;
+    return std::any_of(valid_extensions.begin(), valid_extensions.end(), [&](std::string_view e) { return ext == e; });
 }
 
 void ImageNaming::processImage(std::string_view filename)
 {
     try {
-        FileItem item(filename);
+        FileItem item(filename.data());
         std::string new_name = formatter.rename(item);
 
-        if (enable_write_) {
+        if (enable_write_)
             item.write(new_name);
-        }
     }
     catch (std::exception& e) {
+        if (copy_unhandled_)
+            unhandled_.insert(filename.data());
+
         Log(error) << "Error read filename " << filename << " : " << e.what();
     }
 }

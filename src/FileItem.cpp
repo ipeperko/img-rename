@@ -7,8 +7,8 @@ FileItem::FileItem()
 {
 }
 
-FileItem::FileItem(std::string_view file_name)
-    : filename(file_name)
+FileItem::FileItem(std::string file_name)
+    : filename(std::move(file_name))
     , img(std::make_shared<Magick::Image>())
 {
     img->read(filename);

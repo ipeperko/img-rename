@@ -1,12 +1,15 @@
 #ifndef IMG_RENAME_IMAGENAMING_H
 #define IMG_RENAME_IMAGENAMING_H
 
+#include "Formatter.h"
+
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include "Formatter.h"
+#include <unordered_set>
 
 #define DEFAULT_DST_DIR "img_renamed"
+#define DEFAULT_UNHANDLED_SUBDIR "unhandled"
 
 namespace Magick {
 class Image;
@@ -24,7 +27,7 @@ public:
         src_dir_ = dir;
     }
 
-    std::string const& srcDirectory() const
+    auto const& srcDirectory() const
     {
         return src_dir_;
     }
@@ -34,10 +37,12 @@ public:
         formatter.setDestDirectory(dir);
     }
 
-    std::string const& destDirectory() const
+    auto const& destDirectory() const
     {
         return formatter.destDirectory();
     }
+
+    std::string unhandledDirectory() const;
 
     void setWriteEnabled(bool enable)
     {
@@ -49,6 +54,16 @@ public:
         return enable_write_;
     }
 
+    void setCopyUnhandled(bool val)
+    {
+        copy_unhandled_ = val;
+    }
+
+    bool copyUnhandled() const
+    {
+        return copy_unhandled_;
+    }
+
     void setFormat(std::string_view format)
     {
         formatter.setFormat(format);
@@ -57,7 +72,7 @@ public:
     void readSettingsFile();
 
     // Case insensitive
-    static constexpr const char* valid_extensions[] = { "jpg", "jpeg", "heic" };
+    static constexpr std::array<std::string_view, 3> valid_extensions { "jpg", "jpeg", "heic" };
 
 private:
     static bool knownExtension(std::string_view ext);
@@ -65,6 +80,8 @@ private:
 
     std::string src_dir_ { "./" };
     bool enable_write_ { true };
+    bool copy_unhandled_ {false};
+    std::unordered_set<std::string> unhandled_;
     Formatter formatter;
 };
 

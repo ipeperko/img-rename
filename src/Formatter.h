@@ -1,10 +1,11 @@
 #ifndef IMG_RENAME_FORMATTER_H
 #define IMG_RENAME_FORMATTER_H
 
+#include "FileItem.h"
+
 #include <string>
 #include <vector>
 #include <functional>
-#include "FileItem.h"
 
 namespace Magick {
 class Image;
@@ -21,7 +22,7 @@ public:
 
     void setDestDirectory(std::string_view dir);
 
-    std::string const& destDirectory() const
+    auto const& destDirectory() const
     {
         return dest_dir;
     }

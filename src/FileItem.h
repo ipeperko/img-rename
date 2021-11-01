@@ -21,9 +21,9 @@ public:
     } temp;
 
     FileItem();
-    explicit FileItem(std::string_view file_name);
+    explicit FileItem(std::string file_name);
 
-    std::string const& fileName() const { return filename; }
+    auto const& fileName() const { return filename; }
 
     Magick::Image& image();
 
@@ -35,9 +35,9 @@ public:
 
     static std::vector<std::string> parseDateTime(Magick::Image& image);
 
-    std::string const captureDate() const { return capture_date; }
+    auto const& captureDate() const { return capture_date; }
 
-    std::string const captureTime() const { return capture_time; }
+    auto const& captureTime() const { return capture_time; }
 
 private:
     std::shared_ptr<Magick::Image> img;

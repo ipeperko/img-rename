@@ -74,7 +74,11 @@ std::string Formatter::rename(FileItem& file)
         new_name += kOutputFormat;
     } while (fs::is_regular_file(new_name) && ++file.temp.count_fn);
 
-    Log(info) << "Rename file '" << file.fileName() << "' [" << (!file.captureDate().empty() ? file.captureDate() : std::string("unknown date")) << "_" << (!file.captureTime().empty() ? file.captureTime() : std::string("unknown time")) << " " << (!file.image().attribute("EXIF:Make").empty() ? file.image().attribute("EXIF:Make") : std::string("unknown manufacturer")) << ", " << (!file.image().attribute("EXIF:Model").empty() ? file.image().attribute("EXIF:Model") : std::string("unknown model")) << "]"
+    Log(info) << "Rename file '" << file.fileName() <<
+        "' [" << (!file.captureDate().empty() ? file.captureDate() : std::string("unknown date")) <<
+        "_" << (!file.captureTime().empty() ? file.captureTime() : std::string("unknown time")) << " "
+              << (!file.image().attribute("EXIF:Make").empty() ? file.image().attribute("EXIF:Make") : std::string("unknown manufacturer")) << ", "
+              << (!file.image().attribute("EXIF:Model").empty() ? file.image().attribute("EXIF:Model") : std::string("unknown model")) << "]"
               << " --> " << new_name;
 
     return new_name;

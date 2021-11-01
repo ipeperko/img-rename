@@ -114,11 +114,25 @@ int main(int argc, char** argv) try
         }
 
         // Create destination directory
-        fs::path p(nmg.destDirectory());
+        {
+            fs::path p(nmg.destDirectory());
 
-        if (!fs::is_directory(p)) {
-            std::cout << "Creating directory " << p.native() << "\n";
-            fs::create_directory(p);
+            if (!fs::is_directory(p)) {
+                Log(info) << "Creating directory " << p.native();
+                fs::create_directory(p);
+            }
+        }
+
+        // Create unhandled directory
+        {
+            nmg.setCopyUnhandled(true);
+
+            fs::path p(nmg.unhandledDirectory());
+
+            if (!fs::is_directory(p)) {
+                Log(info) << "Creating directory " << p.native();
+                fs::create_directory(p);
+            }
         }
     }
 
